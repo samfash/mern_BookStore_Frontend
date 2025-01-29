@@ -5,24 +5,28 @@ import { createOrder } from "../services/orderService";
 const OrderMake: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const initialCart = location.state?.cart || [];
 
-  const { bookId, title, price } = location.state || {};
 
-  const [quantity, setQuantity] = useState(1);
+  const [cart, setCart] = useState(initialCart);
   const [paymentMethod, setPaymentMethod] = useState("stripe");
 
-  if (!bookId) {
-    navigate("/books");
-    return null;
-  }
+
+  const totalPrice = cart.reduce((sum: number, book: any) => sum + book.price * book.quantity, 0);
+
+  const handleQuantityChange = (bookId: string, quantity: number) => {
+    const updatedCart = cart.map((book: any) =>
+      book._id === bookId ? { ...book, quantity: Math.max(1, quantity) } : book
+    );
+    setCart(updatedCart);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const totalPrice = quantity * price;
 
     try {
         const { orderId } = await createOrder({
-        books: [{ bookId, quantity }],
+        books: cart.map((book: any) => ({ bookId: book._id, quantity: book.quantity })),
         paymentMethod,
         totalPrice,
     
@@ -39,23 +43,26 @@ const OrderMake: React.FC = () => {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-4">Order Details</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-bold">Book Title</label>
-          <p>{title}</p>
+        {cart.map((book) => (
+        <div key={book._id} className="flex justify-between border p-4 mb-2 rounded shadow-md">
+          <div>
+            <p className="font-semibold">{book.title}</p>
+            <p>${book.price.toFixed(2)} per book</p>
+          </div>
+          <div className="flex items-center">
+            <input
+              type="number"
+              min="1"
+              value={book.quantity}
+              onChange={(e) => handleQuantityChange(book._id, Number(e.target.value))}
+              className="input input-bordered w-16"
+            />
+          </div>
         </div>
+          ))}
         <div>
-          <label className="block text-sm font-bold">Price per Book</label>
-          <p>${price.toFixed(2)}</p>
-        </div>
-        <div>
-          <label className="block text-sm font-bold">Quantity</label>
-          <input
-            type="number"
-            min="1"
-            value={quantity}
-            onChange={(e) => setQuantity(Number(e.target.value))}
-            className="input input-bordered w-full"
-          />
+          <label className="block text-sm font-bold">Total Price</label>
+          <p>Total Price: ${totalPrice.toFixed(2)}</p>
         </div>
         <div>
           <label className="block text-sm font-bold">Payment Method</label>
@@ -69,10 +76,7 @@ const OrderMake: React.FC = () => {
             <option value="flutterwave">Flutterwave</option>
           </select>
         </div>
-        <div>
-          <label className="block text-sm font-bold">Total Price</label>
-          <p>${(quantity * price).toFixed(2)}</p>
-        </div>
+        
         <button type="submit" className="btn btn-primary w-full">
           Submit Order
         </button>

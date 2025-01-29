@@ -2,6 +2,8 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getBookById } from "../services/bookService";
+import { addToCart } from "../services/cartService";
+
 
 const fetchBookDetails = async (id: string) => {
   const response = await getBookById(id);
@@ -20,6 +22,11 @@ const BookDetails: React.FC = () => {
   if (isError) return <p>Failed to load book details.</p>;
 
   const book = data;
+
+  const handleAddToCart = () => {
+    addToCart(book);
+    alert("Book added to cart!");
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -60,6 +67,12 @@ const BookDetails: React.FC = () => {
           >
             Order Now
           </button>
+          <button
+        onClick={handleAddToCart}
+        className="btn btn-primary mt-4"
+      >
+        Add to Cart
+      </button>
         </div>
       </div>
     </div>

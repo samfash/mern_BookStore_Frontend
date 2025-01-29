@@ -11,7 +11,7 @@ import Footer from './components/Footer.tsx';
 const Home = lazy(() => import("./pages/Home.tsx"));
 const Books = lazy(() => import("./pages/Books.tsx"));
 const BookDetails = lazy(() => import("./pages/BookDetails.tsx"));
-// const Cart = lazy(() => import("../pages/Cart"));
+const Cart = lazy(() => import("./pages/Cart"));
 const Orders = lazy(() => import("./pages/orders"));
 const Login = lazy(() => import("./pages/Login.tsx"));
 const Register = lazy(() => import("./pages/Register.tsx"));
