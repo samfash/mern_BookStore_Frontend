@@ -1,18 +1,32 @@
-import React, { useState, useEffect } from "react";
-import { getCart, removeFromCart } from "../services/cartService";
+import React, {  useContext , useState, useEffect } from "react";
+// import { getCart, updateCartItem, removeFromCart } from "../services/cartService";
 import { useNavigate } from "react-router-dom";
+import { CartContext } from "../context/cartContext";
+
 
 const CartPage = () => {
-  const [cart, setCart] = useState<any[]>([]);
+  // const [cart, setCart] = useState<any[]>([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setCart(getCart());
-  }, []);
+  const cartContext = useContext(CartContext);
+  if (!cartContext) return null;
+
+  const { cart, updateCartItem, removeFromCart } = cartContext;
+
+  // useEffect(() => {
+  //   setCart(getCart());
+  // }, []);
+
+  const handleQuantityChange = (bookId: string, quantity: number) => {
+    updateCartItem(bookId, quantity);
+    // setCart(getCart());
+  };
+
+  const totalPrice = cart.reduce((sum, book) => sum + book.price * book.quantity, 0);
 
   const handleRemove = (bookId: string) => {
     removeFromCart(bookId);
-    setCart(getCart());
+    // setCart(getCart());
   };
 
   const handleCheckout = () => {
@@ -28,12 +42,23 @@ const CartPage = () => {
         <div>
           {cart.map((book) => (
             <div key={book._id} className="flex justify-between border p-2 mb-2">
-              <p>{book.title} - ${book.price} x {book.quantity}</p>
+              <div>
+                <p className="font-semibold">{book.title}</p>
+                <p>${book.price.toFixed(2)}</p>
+              </div>
+              <input
+                type="number"
+                min="1"
+                value={book.quantity}
+                onChange={(e) => handleQuantityChange(book._id, Number(e.target.value))}
+                className="input input-bordered w-16"
+              />
               <button onClick={() => handleRemove(book._id)} className="btn btn-danger">
                 Remove
               </button>
             </div>
           ))}
+          <h2 className="text-xl font-bold mt-4">Total Price: ${totalPrice.toFixed(2)}</h2>
           <button onClick={handleCheckout} className="btn btn-primary mt-4">
             Proceed to Checkout
           </button>

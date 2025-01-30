@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useContext} from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getBookById } from "../services/bookService";
-import { addToCart } from "../services/cartService";
+// import { addToCart } from "../services/cartService";
+import { CartContext } from "../context/cartContext";
 
 
 const fetchBookDetails = async (id: string) => {
@@ -13,10 +14,15 @@ const fetchBookDetails = async (id: string) => {
 const BookDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  
 
   const { data, isLoading, isError } = useQuery({queryKey:["book", id], queryFn: () =>
     fetchBookDetails(id!)
-});
+  });
+
+  const cartContext = useContext(CartContext);
+  if (!cartContext) return null;
+  const { addToCart } = cartContext;
 
   if (isLoading) return <p>Loading book details...</p>;
   if (isError) return <p>Failed to load book details.</p>;

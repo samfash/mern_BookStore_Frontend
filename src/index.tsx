@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
 import { HelmetProvider } from "react-helmet-async";
+import { CartProvider } from "../src/context/cartContext.tsx";
 
 // import reportWebVitals from './reportWebVitals.ts';
 
@@ -12,7 +13,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
       <HelmetProvider>
+        <CartProvider>
         <App />
+        </CartProvider>
       </HelmetProvider>
   </React.StrictMode>
 );
