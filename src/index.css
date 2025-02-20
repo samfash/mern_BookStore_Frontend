@@ -1,3 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    body {
+      @apply bg-beige-50 text-chocolate-500;
+    }
+
+    .dark body {
+      @apply bg-chocolate-900 text-beige-50;
+    }
+  }
+  
+  @layer components {
+    .book-card {
+      @apply bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl;
+    }
+    
+    .btn-primary {
+      @apply px-6 py-2 bg-chocolate-500 text-white rounded-full hover:bg-chocolate-400 transition-colors duration-300;
+    }
+    
+    .nav-link {
+      @apply text-chocolate-400 hover:text-chocolate-500 transition-colors duration-200;
+    }
+  }
+  

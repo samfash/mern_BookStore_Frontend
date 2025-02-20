@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect, ReactNode } from "react";
+import React, { createContext, useReducer, useContext, useEffect, ReactNode } from "react";
 
 // Define the shape of a cart item
 interface CartItem {
@@ -12,7 +12,7 @@ interface CartItem {
 interface CartContextType {
   cart: CartItem[];
   addToCart: (book: CartItem) => void;
-  updateCartItem: (bookId: string, quantity: number) => void;
+  updateCartItem: (bookId: string, title: string, quantity: number) => void;
   removeFromCart: (bookId: string) => void;
   clearCart: () => void;
 }
@@ -23,7 +23,7 @@ export const CartContext = createContext<CartContextType | undefined>(undefined)
 // Define action types
 type CartAction =
   | { type: "ADD_TO_CART"; payload: CartItem }
-  | { type: "UPDATE_CART"; payload: { bookId: string; quantity: number } }
+  | { type: "UPDATE_CART"; payload: { bookId: string;  title: string; quantity: number } }
   | { type: "REMOVE_FROM_CART"; payload: string }
   | { type: "CLEAR_CART" };
 
@@ -77,8 +77,8 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   // Action functions
   const addToCart = (book: CartItem) => dispatch({ type: "ADD_TO_CART", payload: book });
-  const updateCartItem = (bookId: string, quantity: number) =>
-    dispatch({ type: "UPDATE_CART", payload: { bookId, quantity } });
+  const updateCartItem = (bookId: string, title: string, quantity: number) =>
+    dispatch({ type: "UPDATE_CART", payload: { bookId,  title, quantity } });
   const removeFromCart = (bookId: string) => dispatch({ type: "REMOVE_FROM_CART", payload: bookId });
   const clearCart = () => dispatch({ type: "CLEAR_CART" });
 
@@ -87,4 +87,13 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
       {children}
     </CartContext.Provider>
   );
+
+};
+
+export const useCart = () => {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error("useCart must be used within a CartProvider");
+  }
+  return context;
 };

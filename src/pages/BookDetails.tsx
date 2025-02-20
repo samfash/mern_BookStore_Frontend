@@ -1,9 +1,11 @@
-import React, {useContext} from "react";
+import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getBookById } from "../services/bookService";
-// import { addToCart } from "../services/cartService";
-import { CartContext } from "../context/cartContext";
+import { getBookById } from "../services/bookService.ts";
+import { useCart } from "../context/cartContext.tsx";
+import SignedImage from "../components/s3SignedUrl.tsx"; // Component for displaying signed images
+import BookInfo from "../components/bookInfo.tsx";
+
 
 
 const fetchBookDetails = async (id: string) => {
@@ -20,9 +22,7 @@ const BookDetails: React.FC = () => {
     fetchBookDetails(id!)
   });
 
-  const cartContext = useContext(CartContext);
-  if (!cartContext) return null;
-  const { addToCart } = cartContext;
+  const { addToCart } = useCart();
 
   if (isLoading) return <p>Loading book details...</p>;
   if (isError) return <p>Failed to load book details.</p>;
@@ -32,54 +32,15 @@ const BookDetails: React.FC = () => {
   const handleAddToCart = () => {
     addToCart(book);
     alert("Book added to cart!");
+    navigate("/carts");
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-4">{book.title}</h1>
       <div className="flex flex-col md:flex-row gap-6">
-        <img
-          src={book.imageUrl}
-          alt={book.title}
-          className="w-full md:w-1/3 object-cover"
-        />
-        <div>
-          <p className="text-lg">
-            <strong>Author:</strong> {book.author}
-          </p>
-          <p className="text-lg">
-            <strong>ISBN:</strong> {book.ISBN}
-          </p>
-          <p className="text-lg">
-            <strong>Published:</strong> {new Date(book.publishedDate).toLocaleDateString()}
-          </p>
-          <p className="text-lg">
-            <strong>Price:</strong> ${book.price.toFixed(2)}
-          </p>
-          <p className="text-lg">
-            <strong>Stock:</strong> {book.stock}
-          </p>
-          <p className="text-lg mt-4">
-            <strong>Description:</strong>
-          </p>
-          <p className="text-gray-700">{book.description}</p>
-          <button
-            onClick={() =>
-              navigate("/orders", {
-                state: { bookId: book._id, title: book.title, price: book.price },
-              })
-            }
-            className="btn btn-primary mt-4"
-          >
-            Order Now
-          </button>
-          <button
-        onClick={handleAddToCart}
-        className="btn btn-primary mt-4"
-      >
-        Add to Cart
-      </button>
-        </div>
+        <SignedImage s3Url={book.coverImage} alt={book.title} className="w-full h-48 object-cover" />
+        <BookInfo book={book} showOrderButton showAddToCartButton handleAddToCart={handleAddToCart} />
       </div>
     </div>
   );

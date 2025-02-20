@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { getBooks, deleteBook } from "../services/bookService";
-import AdminBookForm from "./AdminBookForm";
+import { getBooks, deleteBook } from "../services/bookService.ts";
+import AdminBookForm from "./AdminBookForm.tsx";
 
 const AdminPage: React.FC = () => {
   const [books, setBooks] = useState<any[]>([]);
@@ -11,10 +11,12 @@ const AdminPage: React.FC = () => {
     fetchBooks();
   }, []);
 
+  
   const fetchBooks = async () => {
     try {
-      const data = await getBooks('');
-      setBooks(data);
+      const data = await getBooks(null);
+      const books = Array.isArray(data?.data) ? data.data : [];
+      setBooks(books);
     } catch (error) {
       console.error("Failed to fetch books:", error);
     }

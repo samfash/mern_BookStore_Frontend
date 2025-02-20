@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { createBook, updateBook } from "../services/bookService";
+import { createBook, updateBook } from "../services/bookService.ts";
+import { useNavigate } from "react-router-dom";
 
 interface AdminBookFormProps {
   book: any | null;
   onClose: () => void;
 }
+
 
 const AdminBookForm: React.FC<AdminBookFormProps> = ({ book, onClose }) => {
   const [formData, setFormData] = useState({
@@ -17,6 +19,8 @@ const AdminBookForm: React.FC<AdminBookFormProps> = ({ book, onClose }) => {
     description: book?.description || "",
     coverImage: null as File | null,
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -32,6 +36,8 @@ const AdminBookForm: React.FC<AdminBookFormProps> = ({ book, onClose }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    formData.ISBN = formData.ISBN || `978-${Math.floor(1000000000 + Math.random() * 9000000000)}`;
+
     const formDataToSend = new FormData();
     for (const key in formData) {
       formDataToSend.append(key, formData[key as keyof typeof formData]);
@@ -39,6 +45,8 @@ const AdminBookForm: React.FC<AdminBookFormProps> = ({ book, onClose }) => {
 
     try {
       if (book) {
+        console.log("formDataToSend", formDataToSend);
+        console.log("formData", formData);
         await updateBook(book._id, formDataToSend);
         alert("Book updated successfully!");
       } else {
@@ -46,6 +54,7 @@ const AdminBookForm: React.FC<AdminBookFormProps> = ({ book, onClose }) => {
         alert("Book created successfully!");
       }
       onClose();
+      navigate("/admin");
     } catch (error) {
       console.error("Failed to save book:", error);
       alert("Failed to save book.");

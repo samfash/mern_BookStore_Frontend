@@ -1,12 +1,13 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getUserOrders } from "../services/orderService";
+import { getUserOrders } from "../services/orderService.ts";
 
 type Order = {
   _id: string;
   books: { bookId: string; title: string; quantity: number }[];
   totalPrice: number;
   paymentMethod: string;
+  paymentStatus: string;
   createdAt: string;
 };
 
@@ -35,6 +36,9 @@ const Orders: React.FC = () => {
               <p>
                 <strong>Ordered At:</strong>{" "}
                 {new Date(order.createdAt).toLocaleString()}
+              </p>
+              <p>
+                <strong>Payment Status:</strong> {order.paymentStatus}
               </p>
               <div className="mt-4">
                 <strong>Books:</strong>

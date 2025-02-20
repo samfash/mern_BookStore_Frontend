@@ -4,8 +4,11 @@ import './index.css';
 import App from './App.tsx';
 import { HelmetProvider } from "react-helmet-async";
 import { CartProvider } from "../src/context/cartContext.tsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // import reportWebVitals from './reportWebVitals.ts';
+
+const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,9 +16,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
       <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
         <CartProvider>
         <App />
         </CartProvider>
+        </QueryClientProvider>
       </HelmetProvider>
   </React.StrictMode>
 );

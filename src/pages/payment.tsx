@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { initiatePayment } from "../services/paymentService";
+import { initiatePayment } from "../services/paymentService.ts";
 
 const PaymentPage: React.FC = () => {
   const location = useLocation();
@@ -9,7 +9,7 @@ const PaymentPage: React.FC = () => {
   const { orderId, paymentMethod,totalPrice} = location.state || {};
   // const [paymentUrl, setPaymentUrl] = useState("");
 
-
+  console.log("orderid: ",orderId, " paymentmet: ",paymentMethod, " price: ",totalPrice);
   useEffect(() => {
     if (!orderId || !paymentMethod) {
       navigate("/orders");
@@ -19,6 +19,7 @@ const PaymentPage: React.FC = () => {
     const startPayment = async () => {
       try {
         const { paymentUrl } = await initiatePayment(orderId, paymentMethod, totalPrice);
+        alert(paymentUrl)
         window.location.href = paymentUrl; // Redirect to payment gateway
         // setPaymentUrl(paymentUrl);
 

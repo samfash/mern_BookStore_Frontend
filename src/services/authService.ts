@@ -14,9 +14,7 @@ interface LogData {
 }
 
 export const register = async (formData:MailData ) => {
-  console.log(formData)
   const responce = await axios.post(`${API_URL}/users/register`, formData);
-  console.log(responce)
   return responce.data
 };
 
@@ -27,6 +25,7 @@ export const login = async (formData:LogData) => {
   if (response.data.token) {
     localStorage.setItem('token', response.data.token);
   }
+  
   return response.data;
 };
 

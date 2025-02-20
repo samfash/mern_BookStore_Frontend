@@ -16,9 +16,9 @@ if (existingBook) {
 localStorage.setItem("cart", JSON.stringify(cart));
 };
 
-export const updateCartItem = (bookId: string, quantity: number) => {
+export const updateCartItem = (bookId: string, title: string, quantity: number) => {
     let cart = getCart();
-    cart = cart.map((book: any) => book._id === bookId ? { ...book, quantity } : book);
+    cart = cart.map((book: any) => book._id === bookId ? { ...book, title, quantity } : book);
     localStorage.setItem("cart", JSON.stringify(cart));
 };
 

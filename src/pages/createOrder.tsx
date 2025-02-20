@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { createOrder } from "../services/orderService";
+import { createOrder } from "../services/orderService.ts";
 
 const OrderMake: React.FC = () => {
   const location = useLocation();
@@ -14,9 +14,9 @@ const OrderMake: React.FC = () => {
 
   const totalPrice = cart.reduce((sum: number, book: any) => sum + book.price * book.quantity, 0);
 
-  const handleQuantityChange = (bookId: string, quantity: number) => {
+  const handleQuantityChange = (bookId: string, title: string, quantity: number) => {
     const updatedCart = cart.map((book: any) =>
-      book._id === bookId ? { ...book, quantity: Math.max(1, quantity) } : book
+      book._id === bookId ? { ...book, title, quantity: Math.max(1, quantity) } : book
     );
     setCart(updatedCart);
   };
@@ -25,17 +25,16 @@ const OrderMake: React.FC = () => {
     e.preventDefault();
 
     try {
-        const { orderId } = await createOrder({
-        books: cart.map((book: any) => ({ bookId: book._id, quantity: book.quantity })),
+        const orderId = await createOrder({
+        books: cart.map((book: any) => ({ bookId: book._id, title: book.title, quantity: book.quantity })),
         paymentMethod,
         totalPrice,
-    
       });
+      console.log("orderid: ",orderId)
       alert("Order created successfully!");
       navigate(`/payment`, { state: { orderId, paymentMethod, totalPrice } });
     } catch (error) {
-      console.error(error);
-      alert("Failed to create order. Please try again.");
+      alert(error.response.data.error||"Failed to create order. Please try again.");
     }
   };
 
@@ -54,7 +53,7 @@ const OrderMake: React.FC = () => {
               type="number"
               min="1"
               value={book.quantity}
-              onChange={(e) => handleQuantityChange(book._id, Number(e.target.value))}
+              onChange={(e) => handleQuantityChange(book._id, book.title, Number(e.target.value))}
               className="input input-bordered w-16"
             />
           </div>

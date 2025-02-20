@@ -13,7 +13,7 @@ export const getUserOrders = async () => {
 
 
 export const createOrder = async (orderData: {
-    books: { bookId: string; quantity: number }[];
+    books: { bookId: string; title: string; quantity: number }[];
     paymentMethod: string;
     totalPrice: number;
 }) => {

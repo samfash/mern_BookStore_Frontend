@@ -12,7 +12,8 @@ export const initiatePayment = async (orderId: string, paymentMethod: string, to
       headers: { Authorization: `Bearer ${token}` },
     }
   );
-  return response.data.paymentUrl; // { paymentUrl }
+  console.log(response.data);
+  return response.data; // { paymentUrl }
 };
 
 // Verify payment
@@ -24,5 +25,5 @@ export const verifyPayment = async (payload: Record<string, any>) => {
       headers: { Authorization: `Bearer ${token}` },
     }
   );
-  return response.data.status; // "success" or "failed"
+  return response.data.success; // true or false
 };
