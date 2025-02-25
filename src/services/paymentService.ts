@@ -1,12 +1,11 @@
-import axios from "axios";
+import apiClient from "../utils/apiClient.ts";
 
-const API_URL = "http://localhost:5000/api/v1";
 
 // Initiate payment
 export const initiatePayment = async (orderId: string, paymentMethod: string, totalPrice: number) => {
   const token = localStorage.getItem("token");
-  const response = await axios.post(
-    `${API_URL}/payments/initiate`,
+  const response = await apiClient.post(
+    `/payments/initiate`,
     { orderId, paymentMethod, totalPrice },
     {
       headers: { Authorization: `Bearer ${token}` },
@@ -19,8 +18,8 @@ export const initiatePayment = async (orderId: string, paymentMethod: string, to
 // Verify payment
 export const verifyPayment = async (payload: Record<string, any>) => {
   const token = localStorage.getItem("token");
-  const response = await axios.post(
-    `${API_URL}/payments/verify`,payload,
+  const response = await apiClient.post(
+    `/payments/verify`,payload,
     {
       headers: { Authorization: `Bearer ${token}` },
     }

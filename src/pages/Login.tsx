@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/authService.ts';
 import { Mail, Lock, Eye, EyeOff, ArrowLeft, BookOpen } from 'lucide-react';
@@ -10,11 +10,17 @@ interface FormData {
 }
 
 const Login: React.FC = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const token = localStorage.getItem("token");
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState<FormData>({ email: '', password: '' });
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+      useEffect(() => {
+        if (token) {
+          navigate('/books');
+        }
+      }, [token, navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -27,7 +33,8 @@ const Login: React.FC = () => {
       await login(formData);
       navigate('/books');
     } catch (err) {
-      setError('Invalid email or password');
+      setError('Invalid email or password')
+      console.log(error);
     }
   };
 
@@ -64,7 +71,7 @@ const Login: React.FC = () => {
           Safas Bookstore
         </h1>
         <p className="text-chocolate-400 mt-2">
-          {isLogin ? 'Welcome back, book lover!' : 'Join our reading community'}
+          'Welcome back, book lover!'
         </p>
       </div>
 
@@ -125,8 +132,7 @@ const Login: React.FC = () => {
           </div>
 
 
-          {/* Remember Me & Forgot Password */}
-          {isLogin && (
+          {/* Remember Me & Forgot Password */}  
             <div className="flex items-center justify-between text-sm">
               <label className="flex items-center">
                 <input type="checkbox" className="rounded border-beige-200 text-chocolate-500 focus:ring-chocolate-400" />
@@ -136,7 +142,6 @@ const Login: React.FC = () => {
                 Forgot password?
               </a>
             </div>
-          )}
 
           {/* Submit Button */}
           <button

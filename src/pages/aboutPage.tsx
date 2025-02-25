@@ -1,29 +1,27 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { 
-  BookOpen, Heart, Users, Globe, Mail, MapPin, Phone,
-  BookMarked, Coffee, Calendar, Award, Bookmark, Star, BookText
-} from 'lucide-react';
+import { Award, Bookmark, Star, BookText} from 'lucide-react';
+ import { FadeIn, Stats, Features, Team, Milestones, ContacfForm } from '../components/aboutData.tsx';
 
 function About() {
   
 
   return (
-    <div className="min-h-screen bg-beige-50">
+    <div className="min-h-screen ">
       {/* Hero Section */}
       <motion.section 
-        className="relative bg-beige-100 pt-32 pb-20"
+        className="relative pt-32 pb-20"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <motion.div {...fadeIn} className="inline-block mb-4">
+            <motion.div {...FadeIn} className="inline-block mb-4">
             <span className="text-chocolate-600 font-medium mb-4 block">Established 2005</span>
             </motion.div>
             <motion.h1 
-              {...fadeIn}
+              {...FadeIn}
               className="text-5xl md:text-6xl font-serif font-bold text-chocolate-500 mb-6"
             >
               More Than Just
@@ -31,7 +29,7 @@ function About() {
               A Bookstore
             </motion.h1>
             <motion.p 
-              {...fadeIn}
+              {...FadeIn}
               className="text-xl text-chocolate-400 max-w-3xl mx-auto leading-relaxed"
             >
               Since 2008, Chapters & Pages has been crafting literary experiences that transcend 
@@ -44,10 +42,10 @@ function About() {
       </motion.section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
-            {stats.map((stat, index) => (
+            {Stats.map((stat, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -67,14 +65,14 @@ function About() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-beige-50">
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif font-bold text-chocolate-500 mb-4">What Makes Us Special</h2>
             <p className="text-xl text-chocolate-400">Discover the unique experiences that set us apart</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
+            {Features.map((feature, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -94,7 +92,7 @@ function About() {
       </section>
 
       {/* Mission Section */}
-      <section className="py-20 bg-white overflow-hidden">
+      <section className="py-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -151,7 +149,7 @@ function About() {
       </section>
 
       {/* Timeline Section */}
-      <section className="py-20 bg-beige-50">
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif font-bold text-chocolate-500 mb-4">Our Journey</h2>
@@ -160,7 +158,7 @@ function About() {
           <div className="relative">
             <div className="absolute top-0 left-1/2 w-0.5 h-full bg-chocolate-300 transform -translate-x-1/2" />
             <div className="space-y-16">
-              {milestones.map((milestone, index) => (
+              {Milestones.map((milestone, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
@@ -184,14 +182,14 @@ function About() {
       </section>
 
       {/* Team Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif font-bold text-chocolate-500 mb-4">Meet Our Team</h2>
             <p className="text-xl text-chocolate-400">The passionate individuals behind Chapters & Pages</p>
           </div>
           <div className="grid md:grid-cols-3 gap-12">
-            {team.map((member, index) => (
+            {Team.map((member, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -229,45 +227,14 @@ function About() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 bg-beige-100">
+      <section id="contact" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif font-bold text-chocolate-500 mb-4">Visit Us</h2>
             <p className="text-xl text-chocolate-400">We'd love to welcome you to our literary sanctuary</p>
           </div>
           <div className="grid md:grid-cols-3 gap-12">
-            {[
-              {
-                icon: MapPin,
-                title: "Our Location",
-                lines: [
-                  "123 Book Lane",
-                  "Literary District",
-                  "LT 12345",
-                  "Free parking available"
-                ]
-              },
-              {
-                icon: Phone,
-                title: "Contact Us",
-                lines: [
-                  "(555) 123-4567",
-                  "Mon - Fri: 9am - 9pm",
-                  "Sat - Sun: 10am - 8pm",
-                  "24/7 Online Support"
-                ]
-              },
-              {
-                icon: Mail,
-                title: "Get in Touch",
-                lines: [
-                  "hello@chaptersandpages.com",
-                  "events@chaptersandpages.com",
-                  "Response within 24 hours",
-                  "Newsletter subscription available"
-                ]
-              }
-            ].map((contact, index) => (
+            {ContacfForm.map((contact, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -296,73 +263,6 @@ function About() {
   );
 }
 
-const fadeIn = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 }
-  };
 
-  const stats = [
-    { icon: BookOpen, value: '50,000+', label: 'Curated Books' },
-    { icon: Users, value: '25,000+', label: 'Community Members' },
-    { icon: Heart, value: '15+', label: 'Years of Excellence' },
-    { icon: Globe, value: '100+', label: 'Publishing Partners' },
-  ];
-
-  const features = [
-    {
-      icon: BookMarked,
-      title: 'Curated Selection',
-      description: 'Every book in our collection is hand-picked by our expert curators, ensuring quality and diversity in our offerings.'
-    },
-    {
-      icon: Coffee,
-      title: 'Reading Café',
-      description: 'Our in-house café serves artisanal coffee and pastries, creating the perfect atmosphere for reading and contemplation.'
-    },
-    {
-      icon: Calendar,
-      title: 'Literary Events',
-      description: 'Regular author meetups, book clubs, and literary workshops that bring our community together.'
-    },
-    {
-      icon: Award,
-      title: 'Expert Guidance',
-      description: 'Our knowledgeable staff provides personalized recommendations based on your reading preferences.'
-    }
-  ];
-
-  const team = [
-    {
-      name: 'Sarah Mitchell',
-      role: 'Founder & Head Curator',
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400',
-      quote: 'Books have the power to transform lives. Our mission is to make that transformation accessible to everyone.',
-      achievements: ['Literary Excellence Award 2024', '15 Years in Publishing', 'TEDx Speaker']
-    },
-    {
-      name: 'David Chen',
-      role: 'Literary Events Director',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400',
-      quote: 'Creating spaces where readers can connect and share their love for literature is what drives us.',
-      achievements: ['Community Builder Award', '500+ Events Organized', 'Published Author']
-    },
-    {
-      name: 'Emma Thompson',
-      role: 'Head of Curation',
-      image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=400',
-      quote: 'Every book in our collection is hand-picked with our readers in mind.',
-      achievements: ['Master in Library Science', 'Book Critics Circle Member', 'Literature Podcast Host']
-    }
-  ];
-
-  const milestones = [
-    { year: '2008', title: 'Our Beginning', description: 'Opened our first boutique bookstore in the heart of the city.' },
-    { year: '2012', title: 'Community Growth', description: 'Launched our signature literary events program.' },
-    { year: '2015', title: 'Digital Evolution', description: 'Introduced our online platform and reading recommendations system.' },
-    { year: '2018', title: 'Expansion', description: 'Opened three new locations and launched our mobile library initiative.' },
-    { year: '2020', title: 'Virtual Connect', description: 'Pioneered virtual book clubs and author meetups.' },
-    { year: '2025', title: 'Present Day', description: 'Celebrating our community of 25,000+ readers and growing.' }
-  ];
 
 export default About;

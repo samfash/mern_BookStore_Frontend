@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../services/authService.ts';
 import { Mail, Lock, Eye, EyeOff, ArrowLeft, BookOpen, User } from 'lucide-react';
@@ -23,63 +23,59 @@ const Register: React.FC = () => {
   });
   const navigate = useNavigate();
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false); 
+
+
   const validateForm = () => {
-    let isValid = true;
-    const newErrors = {
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: ''
-    };
+    const newErrors: any = {};
 
-    // Name validation
-    if (!formData.name.trim()) {
-      newErrors.name = 'name is required';
-      isValid = false;
-    }
+    if (!formData.name.trim()) newErrors.name = "Name is required";
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-      isValid = false;
-    }
-
-    // Password validation
-    if (formData.password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters long';
-      isValid = false;
-    }
-
-    if (formData.password !== confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-      isValid = false;
-    }
+    if (!emailRegex.test(formData.email)) newErrors.email = "Invalid email address";
+    if (formData.password.length < 6) newErrors.password = "Password must be at least 6 characters";
+    if (formData.password !== confirmPassword) newErrors.confirmPassword = "Passwords do not match";
 
     setErrors(newErrors);
-    return isValid;
+  return Object.keys(newErrors).length === 0; // Return true if no errors
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+
+    if (isSubmitted) {
+      validateForm();
+    }
+
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(e.target.value);
+
+    if (isSubmitted) {
+      validateForm();
+    }
   };
 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    setIsSubmitted(true); 
+
+    if (!validateForm()) return;
+
     try {
-      if (validateForm()) {
-        await register(formData)
-        console.log('Form submitted:', formData);
-      }
-      navigate('/login');
-    } catch (err) {
-      console.log(err.response.data);
+      setIsSubmitting(true);
+      await register(formData)
+      alert("Registration successful! Please log in.");
+      navigate("/login");
+    } catch (error) {
+      alert("Registration failed. Try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -149,7 +145,7 @@ const Register: React.FC = () => {
                  />
                  <User className="w-5 h-5 text-chocolate-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
                </div>
-               {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
+               {isSubmitted && errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
              </div>
              </div>
 
@@ -171,7 +167,7 @@ const Register: React.FC = () => {
                />
                <Mail className="w-5 h-5 text-chocolate-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
              </div>
-             {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
+             {isSubmitted && errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
            </div>
 
            {/* Password Field */}
@@ -199,7 +195,7 @@ const Register: React.FC = () => {
                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                </button>
              </div>
-             {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password}</p>}
+             {isSubmitted && errors.password && <p className="mt-1 text-sm text-red-500">{errors.password}</p>}
            </div>
 
            {/* Confirm Password Field */}
@@ -220,7 +216,7 @@ const Register: React.FC = () => {
                />
                <Lock className="w-5 h-5 text-chocolate-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
              </div>
-             {errors.confirmPassword && <p className="mt-1 text-sm text-red-500">{errors.confirmPassword}</p>}
+             {isSubmitted && errors.confirmPassword && <p className="mt-1 text-sm text-red-500">{errors.confirmPassword}</p>}
            </div>
 
            {/* Submit Button */}
@@ -228,7 +224,7 @@ const Register: React.FC = () => {
              type="submit"
              className="w-full btn-primary"
            >
-             Create Account
+            {isSubmitting ? "Registering..." : "Register"}
            </button>
 
            {/* Sign In Link */}

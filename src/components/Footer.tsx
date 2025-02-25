@@ -50,7 +50,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="/"
+                  href="/about#contact"
                   className="text-sm hover:text-chocolate-600 transition-colors"
                 >
                   Contact Us
@@ -69,7 +69,7 @@ const Footer = () => {
                   href="/"
                   className="text-sm hover:text-chocolate-600 transition-colors"
                 >
-                  Shipping
+                  Shipping/deliveries
                 </a>
               </li>
             </ul>

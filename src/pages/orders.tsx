@@ -24,9 +24,9 @@ const Orders: React.FC = () => {
         <p>You have no orders yet.</p>
       ) : (
         <div className="grid grid-cols-1 gap-4">
-          {data.map((order: Order) => (
+          {data.map((order: Order, index) => (
             <div key={order._id} className="card shadow-lg p-4">
-              <h2 className="font-bold text-lg mb-2">Order #{order._id}</h2>
+              <h2 className="font-bold text-lg mb-2">Order No#{index}</h2>
               <p>
                 <strong>Total Price:</strong> ${order.totalPrice.toFixed(2)}
               </p>

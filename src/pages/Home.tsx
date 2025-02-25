@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { BookOpen, Clock, Truck, Users } from "lucide-react";
 import Testimonials from "../components/testimonial.tsx";
+import { motion } from "framer-motion";
 
 const Home = () => {
 
@@ -13,22 +14,36 @@ const Home = () => {
         <meta name="description" content="Discover and purchase amazing books online." />
       </Helmet>
       <div>
-        <section  className="py-16 bg-beige-50">
+        <motion.section 
+         initial={{ opacity: 0 }}
+         animate={{ opacity: 1 }}
+         transition={{ duration: 0.6 }}
+         className="py-16 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center">
           <span className="text-brown-600 font-medium mb-4 block">Welcome to BookShop</span>
-            <h2 
+            <motion.h2 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2 }}
               className="text-4xl sm:text-5xl font-serif font-bold text-chocolate-500 mb-4"
             >
               Discover Your Next Adventure
-            </h2>
-            <p 
+            </motion.h2>
+            <motion.p 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4 }}
               className="text-lg text-chocolate-400 mb-8"
             >
               Explore our curated collection of timeless classics and contemporary gems
-            </p>
-            <div className="space-x-4 pb-10" >
+            </motion.p>
+            <motion.div 
+            initial={{ x: 100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="space-x-4 pb-10" >
             <Link 
               className="btn-primary"
               to="/books"
@@ -41,7 +56,7 @@ const Home = () => {
             >
               Learn More
             </Link>
-            </div>
+            </motion.div>
             <div
               className="mt-10 lg:mt-0"
             >
@@ -53,8 +68,8 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent" />
-        </section>
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-beige-50 to-transparent" />
+        </motion.section>
 
          {/* Features Section */}
         <section className="py-16">
@@ -70,13 +85,17 @@ const Home = () => {
                 { icon: Clock, title: "24/7 Support", description: "Always here to help you" },
                 { icon: Users, title: "Community", description: "Join our book club discussions" }
               ].map((feature, index) => (
-                <div
+                <motion.div
+                  key={index}
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: index * 0.1 }}
                   className="text-center p-6 rounded-lg bg-beige-50"
                 >
                   <feature.icon className="w-12 h-12 mx-auto text-chocolate-500 mb-4" />
                   <h4 className="text-xl font-serif font-bold text-chocolate-500 mb-2">{feature.title}</h4>
                   <p className="text-chocolate-400">{feature.description}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -91,8 +110,11 @@ const Home = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {Testimonials.map((testimonial, index) => (
-                <div
+                <motion.div
                   key={testimonial.id}
+                  initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.2 }}
                   className="bg-beige-50 p-6 rounded-lg"
                 >
                   <div className="flex items-center mb-4">
@@ -107,7 +129,7 @@ const Home = () => {
                     </div>
                   </div>
                   <p className="text-chocolate-500">{testimonial.content}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>

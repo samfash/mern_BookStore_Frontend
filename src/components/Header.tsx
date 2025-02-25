@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from "react"
 import { Link, useNavigate } from "react-router-dom"
-import {Moon, Sun, ShoppingCart } from "lucide-react";
+import {Moon, Sun, ShoppingCart, X, Menu } from "lucide-react";
 import { useCart } from "../context/cartContext.tsx";
-
+import {motion} from "framer-motion";
+import Logout from "./logout.tsx";
+import Logo from "../assets/bookLogo.webp";
+import { logout } from '../services/authService.ts';
 
 
 const Header: React.FC = () => {
@@ -13,6 +16,7 @@ const Header: React.FC = () => {
     const [scrolled, setScrolled] = useState(false);
     const { cart } = useCart();
     const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0); // Count total quantity
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 
 
@@ -31,16 +35,17 @@ const Header: React.FC = () => {
     };
 
     useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 50); // Add effect after 50px scroll
-        };
-    
+      
+      const handleScroll = () => {
+          setScrolled(window.scrollY > 50); // Add effect after 50px scroll
+      };
+  
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
   
     const handleLogout = () => {
-      localStorage.removeItem("token");
+      logout();
       navigate("/login");
     };
   
@@ -56,8 +61,17 @@ const Header: React.FC = () => {
         <div className=" flex justify-between items-center h-16">
           
           {/* Logo */}
-          <Link to="/" className="text-2xl font-bold text-brown-900 hover:text-brown-700 transition-colors">
-            📚 Safas Bookstore
+          <Link to="/" className="text-2xl font-bold text-chocolate-600 hover:text-chocolate-900 transition-colors">
+            <motion.h1
+             initial={{ opacity: 0, y: -20 }}
+             animate={{ opacity: 1, y: 0 }}>
+              <img
+                  src={Logo}
+                  className="inline-block align-center h-10 w-10 mr-2"
+                  alt="safas Bookshoop logo"
+                  loading="lazy"/>
+              Safas Bookstore 
+            </motion.h1>
           </Link>
   
           {/* Navigation Links */}
@@ -87,17 +101,36 @@ const Header: React.FC = () => {
             
     
           {/* Authentication Buttons */}
-          <div>
-            {token ? (
-              <button onClick={handleLogout} className="btn btn-danger">
-                Logout
-              </button>
-            ) : (
-              <Link to="/login" className="btn btn-primary">Login</Link>
-            )}
+          <div className="hidden md:flex space-x-8">
+            <Logout token={token} handleLogout={handleLogout} />
           </div>
+
+           {/* Mobile menu button */}
+           <button 
+              className="md:hidden p-2"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <div>Menu<Menu className="w-8 h-6 inline-block" /></div>}
+            </button>
         </div>
         </div>
+         {/* Mobile menu */}
+         {isMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="md:hidden bg-white border-t border-beige-200"
+          >
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              <a href="/" className="block px-3 py-2 nav-link">Home</a>
+              <a href="/books" className="block px-3 py-2 nav-link">Books</a>
+              <a href="/about" className="block px-3 py-2 nav-link">About</a>
+              <a href="/orders" className="block px-3 py-2 nav-link">Orders</a>
+              <Logout token={token} handleLogout={handleLogout}  />
+
+            </div>
+          </motion.div>
+        )}
       </header>
     );
 

@@ -1,6 +1,5 @@
-import axios from 'axios';
+import apiClient from "../utils/apiClient.ts";
 
-const API_URL = "http://localhost:5000/api/v1";
 
 interface Book {
   _id: string;
@@ -22,7 +21,7 @@ interface BooksResponse {
 
 export const getBooks = async (queryParams: any): Promise<BooksResponse> => {
   const token = localStorage.getItem('token');
-  const { data } = await axios.get<BooksResponse>(`${API_URL}/books?${queryParams} `, {
+  const { data } = await apiClient.get<BooksResponse>(`/books?${queryParams} `, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return data;
@@ -30,20 +29,20 @@ export const getBooks = async (queryParams: any): Promise<BooksResponse> => {
 
 export const getBookById = async (id: string) => {
   const token = localStorage.getItem("token");
-  const response = await axios.get(`${API_URL}/books/${id}`, {
+  const response = await apiClient.get(`/books/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;
 };
 
 export const getSignedUrl = async (key: string) => {
-  const { data } = await axios.get(`${API_URL}/get-signed-url/${key}`);
+  const { data } = await apiClient.get(`/get-signed-url/${key}`);
   return data.url;
 }
 
 export const createBook = async (bookData: FormData) => {
   const token = localStorage.getItem("token");
-  const response = await axios.post(`${API_URL}/books`, bookData, {
+  const response = await apiClient.post(`/books`, bookData, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;
@@ -53,7 +52,7 @@ export const createBook = async (bookData: FormData) => {
 export const updateBook = async (bookId: string, bookData: FormData) => {
   console.log(bookData)
   const token = localStorage.getItem("token");
-  const response = await axios.patch(`${API_URL}/books/${bookId}`, bookData, {
+  const response = await apiClient.patch(`/books/${bookId}`, bookData, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;
@@ -62,7 +61,7 @@ export const updateBook = async (bookId: string, bookData: FormData) => {
 // Delete a book
 export const deleteBook = async (bookId: string) => {
   const token = localStorage.getItem("token");
-  const response = await axios.delete(`${API_URL}/books/${bookId}`, {
+  const response = await apiClient.delete(`/books/${bookId}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;

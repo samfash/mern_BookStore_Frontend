@@ -14,6 +14,7 @@ type Book = {
   ISBN: string;
   price: number;
   coverImage: string; // URL for book cover image
+  quantity: number;
 };
 
 
@@ -49,10 +50,11 @@ const Books: React.FC = () => {
 
   const { addToCart } = useCart();
 
-  const handleAddToCart = (book) => {
+  const handleAddToCart = (book: Book) => {
     addToCart(book);
     setMessage(`${book.title} added to cart`);
     setTimeout(() => setMessage(""), 3000);
+    console.log(message)
   }
 
 
@@ -90,6 +92,7 @@ const Books: React.FC = () => {
           onChange={(e) => setAuthor(e.target.value)}
           className="input input-bordered w-full md:w-1/4 placeholder-chocolate-300/100"
         />
+        <div className="text-center">Published Date:</div>
         <input
           type="date"
           placeholder="Start Date"
@@ -97,6 +100,7 @@ const Books: React.FC = () => {
           onChange={(e) => setStartDate(e.target.value)}
           className="input input-bordered w-full md:w-1/6 text-chocolate-600"
         />
+        <div className="text-center">to</div>
         <input
           type="date"
           placeholder="End Date"
@@ -127,7 +131,7 @@ const Books: React.FC = () => {
       {isError && <p>Failed to fetch books. Please try again.</p>}
       {!isLoading && !isError && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {books.map((book) => (
+          {books.map((book: Book) => (
             <div key={book._id} className="card shadow-lg">
               
                 <Link
