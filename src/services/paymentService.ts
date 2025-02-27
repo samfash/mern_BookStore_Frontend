@@ -1,6 +1,5 @@
 import apiClient from "../utils/apiClient.ts";
 
-
 // Initiate payment
 export const initiatePayment = async (orderId: string, paymentMethod: string, totalPrice: number) => {
   const token = localStorage.getItem("token");
@@ -11,7 +10,6 @@ export const initiatePayment = async (orderId: string, paymentMethod: string, to
       headers: { Authorization: `Bearer ${token}` },
     }
   );
-  console.log(response.data);
   return response.data; // { paymentUrl }
 };
 

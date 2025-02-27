@@ -1,8 +1,5 @@
-import axios from 'axios';
 import apiClient from "../utils/apiClient.ts";
 
-
-const API_URL = "http://localhost:5000/api/v1";
 
 interface MailData {
   name: string;
@@ -17,18 +14,16 @@ interface LogData {
 
 export const getUserProfile = async () => {
   const token = localStorage.getItem("token");
-  return apiClient.get("/orders", { headers: { Authorization: `Bearer ${token}` } });
+  return apiClient.get("/users/profiles", { headers: { Authorization: `Bearer ${token}` } });
 };
 
 export const register = async (formData:MailData ) => {
-  const responce = await axios.post(`${API_URL}/users/register`, formData);
+  const responce = await apiClient.post(`/users/register`, formData);
   return responce.data
 };
 
 export const login = async (formData:LogData) => {
-  console.log(formData)
-  const response = await axios.post(`${API_URL}/users/login`, formData);
-  console.log(response)
+  const response = await apiClient.post(`/users/login`, formData);
   if (response.data.token) {
     localStorage.setItem('token', response.data.token);
   }

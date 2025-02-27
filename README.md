@@ -1,7 +1,39 @@
-# Getting Started with Create React App
+# 📖 Online Bookstore Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the frontend for the MERN-based Online Bookstore, where users can browse, add to cart, order books, and make payments using Stripe, Paystack, and Flutterwave.
 
+## 🚀 Live Demo
+### 📌 The project is hosted on Vercel:
+###  🔗 [Live URL](https://github.com/samfash)
+
+## 📌 Features
+**📚 View all books (Paginated, Search & Filter)**
+**🛒 Add books to cart (Persistent via Context API)**
+**🛍️ Create orders (For multiple books)**
+**💳 Make payments via Stripe, Paystack, or Flutterwave**
+**🛡️ User authentication (Register, Login, JWT-based)**
+**🛠️ Admin dashboard (Manage books: Create, Update, Delete)**
+**🌙 Dark/Light Mode**
+**📈 SEO Optimization (Meta tags, sitemap)**
+**🏎️ Performance Optimizations (Lazy loading, CDN, PWA)**
+
+## **📌 Setup Instructions**
+### **1️⃣ Clone the Repository**
+```bash
+git clone https://github.com/samfash/mern-bookstore-frontend.git
+cd src
+```
+
+### **2. install Dependencies**
+```bash
+npm install
+```
+### **3. set up environmental variables**
+```bash
+PORT=5000
+NODE_ENV=development
+FRONTEND_URL=http://localhost:3000
+```
 ## Available Scripts
 
 In the project directory, you can run:
@@ -39,8 +71,7 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## 🚀 Made with ❤️ by Samuel Fasanya
+If you like this project, give it a ⭐ on [Github](https://github.com/samfash)!
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
