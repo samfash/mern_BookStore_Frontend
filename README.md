@@ -4,7 +4,7 @@ This is the frontend for the MERN-based Online Bookstore, where users can browse
 
 ## 🚀 Live Demo
 ### 📌 The project is hosted on Vercel:
-###  🔗 [Live URL](https://github.com/samfash)
+###  🔗 [Live URL](https://safas-book-store.vercel.app/)
 
 ## 📌 Features
 **📚 View all books (Paginated, Search & Filter)**
