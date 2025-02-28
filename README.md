@@ -8,16 +8,16 @@ This is the frontend for the MERN-based Online Bookstore, where users can browse
 ### [Backend Link](https://github.com/samfash/mern_bookstore_backend.git)
 
 ## 📌 Features
-✅ Fetches dynamic book data from **Contentful**  
-**📚 View all books (Paginated, Search & Filter)**
-**🛒 Add books to cart (Persistent via Context API)**
-**🛍️ Create orders (For multiple books)**
-**💳 Make payments via Stripe, Paystack, or Flutterwave**
-**🛡️ User authentication (Register, Login, JWT-based)**
-**🛠️ Admin dashboard (Manage books: Create, Update, Delete)**
-**🌙 Dark/Light Mode**
-**📈 SEO Optimization (Meta tags, sitemap)**
-**🏎️ Performance Optimizations (Lazy loading, CDN, PWA)**
+- ✅ Fetches dynamic book data from **Contentful**  
+- **📚 View all books (Paginated, Search & Filter)**
+- **🛒 Add books to cart (Persistent via Context API)**
+- **🛍️ Create orders (For multiple books)**
+- **💳 Make payments via Stripe, Paystack, or Flutterwave**
+- **🛡️ User authentication (Register, Login, JWT-based)**
+- **🛠️ Admin dashboard (Manage books: Create, Update, Delete)**
+- **🌙 Dark/Light Mode**
+- **📈 SEO Optimization (Meta tags, sitemap)**
+- **🏎️ Performance Optimizations (Lazy loading, CDN, PWA)**
 
 ## **📌 Setup Instructions**
 ### **1️⃣ Clone the Repository**
