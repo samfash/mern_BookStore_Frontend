@@ -1,14 +1,35 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { choiceData } from "../components/choicwData.tsx";
-import { featuredBooks } from "../components/newArrivalData.tsx";
 import Testimonials from "../components/testimonial.tsx";
+import client from "../utils/contentfulclient.ts";
+
+interface NewPost {
+  id: string;
+  title: string;
+  author: string;
+  coverImage: string;
+  ratings: number;
+}
 
 const Home = () => {
+  const [posts, setPosts] = useState<NewPost[]>([]);
 
+  useEffect(() => {
+    client.getEntries({ content_type: "newBooks" }).then((response) => {
+      const books = response.items.map((item) => ({
+        id: item.sys.id,
+        title: String(item.fields.title),
+        author: String(item.fields.author),
+        coverImage: String(item.fields.coverImage),
+        ratings: Number(item.fields.ratings),
+      }));
+      setPosts(books);
+    })
+  }, []);
   return (
     <>
       <Helmet>
@@ -109,7 +130,7 @@ const Home = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {featuredBooks.map((book, index) => (
+            {posts.map((book, index) => (
               <div key={book.title}    
                className=" group">
                 <motion.div
@@ -118,7 +139,7 @@ const Home = () => {
                 transition={{ delay: index * 0.2 }}
                 className="relative aspect-[3/4] mb-4 overflow-hidden rounded-lg book-card">
                   <img
-                    src={book.cover}
+                    src={book.coverImage}
                     alt={book.title}
                     className="w-full h-full object-cover transition-transform group-hover:scale-105"
                   />
@@ -134,7 +155,7 @@ const Home = () => {
                 <p className="text-chocolate-600">{book.author}</p>
                 <div className="flex items-center mt-2">
                   <Star className="h-4 w-4 text-beige-400 fill-current" />
-                  <span className="ml-1 text-chocolate-600">{book.rating}</span>
+                  <span className="ml-1 text-chocolate-600">{book.ratings}</span>
                 </div>
               </div>
             ))}
