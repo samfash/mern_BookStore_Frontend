@@ -5,8 +5,10 @@ This is the frontend for the MERN-based Online Bookstore, where users can browse
 ## 🚀 Live Demo
 ### 📌 The project is hosted on Vercel:
 ###  🔗 [Live URL](https://safas-book-store.vercel.app/)
+### [Backend Link](https://github.com/samfash/mern_bookstore_backend.git)
 
 ## 📌 Features
+✅ Fetches dynamic book data from **Contentful**  
 **📚 View all books (Paginated, Search & Filter)**
 **🛒 Add books to cart (Persistent via Context API)**
 **🛍️ Create orders (For multiple books)**
@@ -20,8 +22,44 @@ This is the frontend for the MERN-based Online Bookstore, where users can browse
 ## **📌 Setup Instructions**
 ### **1️⃣ Clone the Repository**
 ```bash
-git clone https://github.com/samfash/mern-bookstore-frontend.git
+git clone https://github.com/samfash/mern_bookstore_frontend.git
 cd src
+```
+
+---
+
+## **📌 Prerequisites**
+Before setting up the project, ensure you have:
+- **Node.js v18+** installed
+- **npm** or **yarn**
+- A **Contentful account** with API keys
+
+---
+
+1️⃣ Create a Contentful Account
+    Sign up at Contentful
+    Create a new space in Contentful
+    Get your Space ID, Access Token, and Content Model
+
+2️⃣ Define Your Content Model
+    In Contentful, create a Content Model named Book with the following fields:
+```
+Field Name	Field ID	Type	Required
+Title	title	Text	✅ Yes
+Author	author	Text	✅ Yes
+Description	description	Rich Text	✅ Yes
+Price	price	Number	✅ Yes
+Stock	stock	Number	✅ Yes
+Cover Image	coverImage	Media	✅ Yes\
+```
+
+3️⃣ Add Contentful API Keys to .env
+Create a .env file in the project root and add:
+
+env
+```bash
+VITE_CONTENTFUL_SPACE_ID=your_space_id
+VITE_CONTENTFUL_ACCESS_TOKEN=your_access_token
 ```
 
 ### **2. install Dependencies**
