@@ -44,22 +44,13 @@ Before setting up the project, ensure you have:
 2️⃣ Define Your Content Model
     In Contentful, create a Content Model named Book with the following fields:
 ```
-Field Name	Field ID	Type	Required
-Title	title	Text	✅ Yes
-Author	author	Text	✅ Yes
+Field Name	Field ID	Type	    Required
+Title	    title	    Text	    ✅ Yes
+Author	    author	    Text	    ✅ Yes
 Description	description	Rich Text	✅ Yes
-Price	price	Number	✅ Yes
-Stock	stock	Number	✅ Yes
-Cover Image	coverImage	Media	✅ Yes\
-```
-
-3️⃣ Add Contentful API Keys to .env
-Create a .env file in the project root and add:
-
-env
-```bash
-VITE_CONTENTFUL_SPACE_ID=your_space_id
-VITE_CONTENTFUL_ACCESS_TOKEN=your_access_token
+Price	    price	    Number	    ✅ Yes
+Stock	    stock	    Number	    ✅ Yes
+CoverImage	coverImage	Media	    ✅ Yes
 ```
 
 ### **2. install Dependencies**
@@ -71,6 +62,8 @@ npm install
 PORT=5000
 NODE_ENV=development
 FRONTEND_URL=http://localhost:3000
+VITE_CONTENTFUL_SPACE_ID=your_space_id
+VITE_CONTENTFUL_ACCESS_TOKEN=your_access_token
 ```
 ## Available Scripts
 
