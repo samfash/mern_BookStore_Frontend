@@ -39,7 +39,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-beige-100 flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -80,7 +80,7 @@ const Login: React.FC = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="bg-white rounded-lg shadow-lg p-8"
+        className=" rounded-lg shadow-lg p-8"
       >
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -116,7 +116,7 @@ const Login: React.FC = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-4 py-2 pl-10 pr-10 border border-beige-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-chocolate-400 focus:border-transparent"
+                className="w-full px-4 py-2 pl-10 pr-10 border border-beige-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-chocolate-400 focus:border-transparent text-chocolate-600"
                 placeholder="••••••••"
                 required
               />
